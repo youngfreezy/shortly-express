@@ -4,13 +4,16 @@
   <ul>
     <li><a href='#' class='index'>All Links</a></li>
     <li><a href='#' class='create'>Shorten</a></li>
+    <li><a href='/logout'>Logout</a></li>
   </ul>
   </div>
   <div id='container'></div>
 </script>
 
 <script id='link' type='text/x-handlebars-template'>
-  <img src='/redirect_icon.png'/>
+  <div class='favicon'>
+    <img src='/favicons/{{code}}.ico'/>
+  </div>
   <div class='info'>
     <div class='visits'><span class='count'>{{visits}}</span>Visits</div>
     <div class='title'>{{title}}</div>
@@ -21,7 +24,7 @@
 
 <script id='create' type='text/x-handlebars-template'>
   <form>
-      <input class='text' type='text' name='url'>
+      <input class='text' type='text' name='url' autofocus>
       <input type='submit' value='Shorten'>
   </form>
   <img class='spinner' src='/spiffygif_46x46.gif'>

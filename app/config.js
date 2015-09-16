@@ -9,6 +9,7 @@ var db = Bookshelf.initialize({
     password: 'password',
     database: 'shortlydb',
     charset: 'utf8',
+    debug: true,
     filename: path.join(__dirname, '../db/shortly.sqlite')
   }
 });
@@ -21,10 +22,11 @@ db.knex.schema.hasTable('urls').then(function(exists) {
       link.string('base_url', 255);
       link.string('code', 100);
       link.string('title', 255);
+      link.integer('user_id');
       link.integer('visits');
       link.timestamps();
-    }).then(function (table) {
-      console.log('Created Table', table);
+    }).then(function() {
+      console.log('Created URLs Table');
     });
   }
 });
@@ -35,8 +37,8 @@ db.knex.schema.hasTable('clicks').then(function(exists) {
       click.increments('id').primary();
       click.integer('link_id');
       click.timestamps();
-    }).then(function (table) {
-      console.log('Created Table', table);
+    }).then(function() {
+      console.log('Created Clicks Table');
     });
   }
 });
@@ -44,6 +46,19 @@ db.knex.schema.hasTable('clicks').then(function(exists) {
 /************************************************************/
 // Add additional schema definitions below
 /************************************************************/
+
+db.knex.schema.hasTable('users').then(function(exists) {
+  if (!exists) {
+    db.knex.schema.createTable('users', function (user) {
+      user.increments('id').primary();
+      user.string('username', 32);
+      user.string('password', 128);
+      user.timestamps();
+    }).then(function() {
+      console.log('Created Users Table');
+    });
+  }
+});
 
 
 module.exports = db;
